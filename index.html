@@ -74,6 +74,9 @@
         transform: scale(1.2);
         color: #e07b39;
       }
+      .hidden {
+        display: none !important;
+      }
     </style>
   </head>
   <body class="text-gray-800">
@@ -93,9 +96,9 @@
           class="container mx-auto flex flex-row md:flex-col space-x-6 md:space-x-0 md:space-y-6 text-sm font-normal tracking-widest text-gray-700 uppercase"
         >
           <a href="#" class="nav-link" id="bio-nav-link">Bio</a>
-          <a href="https://cataas.com/cat" class="nav-link" id="cat-nav-link" target="_blank">Cat</a>
-          <a href="https://placebear.com/600/700" class="nav-link" id="bear-nav-link" target="_blank">Bear</a>
-          <a href="https://place.dog/700/600" class="nav-link" id="doggo-nav-link" target="_blank">Doggo</a>
+          <a href="#" class="nav-link" id="cat-nav-link">Cat</a>
+          <a href="#" class="nav-link" id="bear-nav-link">Bear</a>
+          <a href="#" class="nav-link" id="doggo-nav-link">Doggo</a>
         </div>
       </nav>
 
@@ -196,10 +199,34 @@
             <p class="text-lg text-gray-700 mb-4">
                 Have a cool flower
             </p>
-            <img src="https://placehold.co/600x300/e6e6fa/4a5568?text=Cool+Flower+Here" onerror="this.src='flower.jpg'" alt="A cool flower image" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
-            <p class="text-sm text-gray-500 mt-2 text-center">
-                (This image is supposed to be that flower, but if it doesn't load, pretend it's there, okay?!)
+            <img src="flower.jpg" alt="A cool flower image" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+        </div>
+
+        <!-- Cat Section - Initially hidden -->
+        <div id="cat-section" class="hidden">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Cat Zone</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Welcome to the cat zone! Here's a cute cat for you.
             </p>
+            <img src="https://cataas.com/cat" alt="A cute cat" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+        </div>
+
+        <!-- Bear Section - Initially hidden -->
+        <div id="bear-section" class="hidden">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Bear Territory</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Enter the bear territory! Here's a majestic bear.
+            </p>
+            <img src="https://placebear.com/600/700" alt="A majestic bear" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+        </div>
+
+        <!-- Doggo Section - Initially hidden -->
+        <div id="doggo-section" class="hidden">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Doggo Paradise</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Welcome to doggo paradise! Here's an adorable dog.
+            </p>
+            <img src="https://place.dog/700/600" alt="An adorable dog" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
         </div>
       </main>
     </div>
@@ -213,31 +240,40 @@
 
             const introSection = document.getElementById('intro-section');
             const bioSection = document.getElementById('bio-section');
+            const catSection = document.getElementById('cat-section');
+            const bearSection = document.getElementById('bear-section');
+            const doggoSection = document.getElementById('doggo-section');
 
             // Function to show a specific section and hide others
             function showSection(sectionToShow) {
                 introSection.classList.add('hidden');
                 bioSection.classList.add('hidden');
+                catSection.classList.add('hidden');
+                bearSection.classList.add('hidden');
+                doggoSection.classList.add('hidden');
 
                 sectionToShow.classList.remove('hidden');
             }
 
-            // Event listener for the Bio link
+            // Event listeners for all navigation links
             bioNavLink.addEventListener('click', function(event) {
-                event.preventDefault(); // Stop the default link behavior
+                event.preventDefault();
                 showSection(bioSection);
             });
 
-            // For other links, currently just show the intro section as a fallback, but open new tab for external links
             catNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
-                // Since target="_blank" is used, default behavior is fine.
+                event.preventDefault();
+                showSection(catSection);
             });
+
             bearNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
+                event.preventDefault();
+                showSection(bearSection);
             });
+
             doggoNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
+                event.preventDefault();
+                showSection(doggoSection);
             });
         });
     </script>
