@@ -2,82 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>itswal.me</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Wal - Student & Developer | Portfolio</title>
+    <meta name="title" content="Wal - Student & Developer | Portfolio" />
+    <meta name="description" content="Personal portfolio of Wal, a passionate student and developer. Explore my projects, interests, and connect with me on social media." />
+    <meta name="keywords" content="Wal, portfolio, student, developer, web development, programming" />
+    <meta name="author" content="Wal" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://itswal.me/" />
+    <meta property="og:title" content="Wal - Student & Developer | Portfolio" />
+    <meta property="og:description" content="Personal portfolio of Wal, a passionate student and developer. Explore my projects, interests, and connect with me on social media." />
+    <meta property="og:image" content="https://itswal.me/flower.jpg" />
+    <meta property="og:site_name" content="itswal.me" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://itswal.me/" />
+    <meta property="twitter:title" content="Wal - Student & Developer | Portfolio" />
+    <meta property="twitter:description" content="Personal portfolio of Wal, a passionate student and developer. Explore my projects, interests, and connect with me on social media." />
+    <meta property="twitter:image" content="https://itswal.me/flower.jpg" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/flower.jpg" />
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #ffdabe, #ffc0cb 30%, #e6e6fa 60%, #add8e6 100%);
-        background-size: 400% 400%;
-        animation: gradientAnimation 15s ease infinite;
-        overflow: hidden;
-        position: relative; /* Added for optimization */
-        will-change: background-position; /* Added for optimization */
-      }
-      @keyframes gradientAnimation {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-      .blob {
-        position: absolute;
-        opacity: 0.5;
-        filter: blur(40px);
-        z-index: 0;
-      }
-      .blob-1 {
-        width: 450px;
-        height: 450px;
-        top: -100px;
-        left: -100px;
-        background: rgba(170, 180, 200, 0.5);
-        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-        animation: blobFloat 20s infinite alternate;
-      }
-      .blob-2 {
-        width: 550px;
-        height: 550px;
-        bottom: -150px;
-        right: -150px;
-        background: rgba(60, 140, 130, 0.6);
-        border-radius: 70% 30% 40% 60% / 60% 40% 70% 30%;
-        animation: blobFloat 25s infinite alternate-reverse;
-      }
-      @keyframes blobFloat {
-        to {
-          transform: translate(20px, -30px) scale(1.1);
-          border-radius: 70% 30% 40% 60% / 60% 40% 70% 30%;
-        }
-      }
-      .nav-link,
-      .social-icon {
-        transition: all 0.2s ease-in-out;
-      }
-      .nav-link:hover {
-        transform: translateY(-2px);
-        color: #4a5568;
-      }
-      .social-icon:hover {
-        transform: scale(1.2);
-        color: #e07b39;
-      }
-    </style>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./assets/style.css" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Wal",
+      "jobTitle": "Student",
+      "url": "https://itswal.me",
+      "sameAs": [
+        "https://www.linkedin.com/in/itswal/"
+      ],
+      "image": "https://itswal.me/flower.jpg",
+      "description": "Passionate student and developer"
+    }
+    </script>
   </head>
   <body class="text-gray-800">
-    <div class="absolute inset-0 z-0">
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
+      Skip to main content
+    </a>
+    
+    <!-- Screen reader announcements -->
+    <div id="screen-reader-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="absolute inset-0 z-0" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
     </div>
@@ -88,31 +77,80 @@
     >
       <nav
         class="w-full md:w-1/4 mb-8 md:mb-0 md:mr-8 flex justify-center md:justify-start"
+        role="navigation"
+        aria-label="Main navigation"
       >
         <div
           class="container mx-auto flex flex-row md:flex-col space-x-6 md:space-x-0 md:space-y-6 text-sm font-normal tracking-widest text-gray-700 uppercase"
         >
-          <a href="#" class="nav-link" id="bio-nav-link">Bio</a>
-          <a href="https://cataas.com/cat" class="nav-link" id="cat-nav-link" target="_blank">Cat</a>
-          <a href="https://placebear.com/600/700" class="nav-link" id="bear-nav-link" target="_blank">Bear</a>
-          <a href="https://place.dog/700/600" class="nav-link" id="doggo-nav-link" target="_blank">Doggo</a>
+          <button 
+            class="nav-link nav-button" 
+            id="bio-nav-button"
+            aria-describedby="bio-description"
+          >
+            Bio
+          </button>
+          <span id="bio-description" class="sr-only">View about me section</span>
+          
+          <a 
+            href="https://cataas.com/cat" 
+            class="nav-link" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label="View random cat image (opens in new tab)"
+          >
+            Cat
+          </a>
+          
+          <a 
+            href="https://placebear.com/600/700" 
+            class="nav-link" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label="View random bear image (opens in new tab)"
+          >
+            Bear
+          </a>
+          
+          <a 
+            href="https://place.dog/700/600" 
+            class="nav-link" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label="View random dog image (opens in new tab)"
+          >
+            Doggo
+          </a>
         </div>
       </nav>
 
       <main
+        id="main-content"
         class="w-full max-w-5xl md:w-3/4 bg-white/30 backdrop-blur-md rounded-2xl border border-[#d4b38d] p-8 md:p-12 relative"
         style="transform: translateX(-20px);"
+        role="main"
       >
         <!-- Intro Section - Initially visible -->
-        <div id="intro-section">
+        <section id="intro-section" aria-hidden="false">
             <div class="mb-8">
-                <h1 class="text-5xl md:text-7xl font-bold text-gray-800">Wal</h1>
+                <button 
+                  id="home-button"
+                  class="bg-transparent border-none cursor-pointer p-0 text-left"
+                  aria-label="Return to introduction"
+                >
+                  <h1 class="text-5xl md:text-7xl font-bold text-gray-800">Wal</h1>
+                </button>
                 <p class="text-lg md:text-xl text-gray-700 mt-2">student</p>
             </div>
 
-            <div class="flex space-x-5 text-amber-600 mt-6">
-                <!-- insta icon -->
-                <a href="#" class="social-icon">
+            <div class="flex space-x-5 text-amber-600 mt-6" role="list" aria-label="Social media links">
+                <!-- Instagram icon -->
+                <a 
+                  href="#" 
+                  class="social-icon" 
+                  aria-label="Visit Instagram profile"
+                  role="listitem"
+                >
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="xMidYMid meet"
@@ -121,19 +159,20 @@
                     style="fill: currentColor;"
                     width="24px"
                     height="24px"
+                    aria-hidden="true"
                     >
                     <g>
-                        <g id="__id0_sd5b1nkfnl">
+                        <g>
                         <path
                             d="M228.1,41.1c60.9,0,68.1,0.2,92.2,1.3c22.2,1,34.3,4.7,42.4,7.9c10.6,4.1,18.2,9.1,26.2,17.1 c8,8,12.9,15.6,17.1,26.2c3.1,8,6.8,20.1,7.9,42.4c1.1,24.1,1.3,31.3,1.3,92.2c0,60.9-0.2,68.1-1.3,92.2c-1,22.2-4.7,34.3-7.9,42.4 c-4.1,10.6-9.1,18.2-17.1,26.2c-8,8-15.6,12.9-26.2,17.1c-8,3.1-20.1,6.8-42.4,7.9c-24.1,1.1-31.3,1.3-92.2,1.3 c-60.9,0-68.1-0.2-92.2-1.3c-22.2-1-34.3-4.7-42.4-7.9c-10.6-4.1-18.2-9.1-26.2-17.1c-8-8-12.9-15.6-17.1-26.2 c-3.1-8-6.8-20.1-7.9-42.4c-1.1-24.1-1.3-31.3-1.3-92.2c0-60.9,0.2-68.1,1.3-92.2c1-22.2,4.7-34.3,7.9-42.4 c4.1-10.6,9.1,18.2,17.1-26.2c8-8,15.6-12.9,26.2-17.1c8-3.1,20.1-6.8,42.4-7.9C160,41.3,167.2,41.1,228.1,41.1 M228.1,0 c-62,0-69.7,0.3-94.1,1.4c-24.3,1.1-40.9,5-55.4,10.6c-15,5.8-27.7,13.6-40.4,26.3C25.6,51,17.8,63.7,12,78.7 c-5.6,14.5-9.5,31.1-10.6,55.4C0.3,158.4,0,166.2,0,228.1c0,62,0.3,69.7,1.4,94.1c1.1,24.3,5,40.9,10.6,55.4 c5.8,15,13.6,27.7,26.3,40.4c12.7,12.7,25.4,20.5,40.4,26.3c14.5,5.6,31.1,9.5,55.4,10.6c24.3,1.1,32.1,1.4,94.1,1.4 c62,0,69.7-0.3,94.1-1.4c24.3-1.1,40.9-5,55.4-10.6c15-5.8,27.7-13.6,40.4-26.3c12.7-12.7,20.5-25.4,26.3-40.4 c5.6-14.5,9.5-31.1,10.6-55.4c1.1-24.3,1.4-32.1,1.4-94.1c0-62-0.3-69.7-1.4-94.1c-1.1-24.3-5-40.9-10.6-55.4 c-5.8-15-13.6-27.7-26.3-40.4c-12.7-12.7-25.4-20.5-40.4-26.3c-14.5-5.6-31.1-9.5-55.4-10.6C297.9,0.3,290.1,0,228.1,0"
                         />
                         </g>
-                        <g id="__id1_sd5b1nkfnl">
+                        <g>
                         <path
                             d="M228.1,111C163.4,111,111,163.4,111,228.1c0,64.7,52.5,117.2,117.2,117.2c64.7,0,117.2-52.4,117.2-117.2 C345.3,163.4,292.8,111,228.1,111 M228.1,304.2c-42,0-76-34-76-76c0-42,34-76,76-76c42,0,76,34,76,76 C304.2,270.1,270.1,304.2,228.1,304.2"
                         />
                         </g>
-                        <g id="__id2_sd5b1nkfnl">
+                        <g>
                         <path
                             d="M377.3,106.4c0,15.1-12.3,27.4-27.4,27.4c-15.1,0-27.4-12.3-27.4-27.4c0-15.1,12.3-27.4,27.4-27.4 C365,79,377.3,91.2,377.3,106.4"
                         />
@@ -141,8 +180,13 @@
                     </g>
                     </svg>
                 </a>
-                <!-- github -->
-                <a href="#" class="social-icon">
+                <!-- GitHub -->
+                <a 
+                  href="#" 
+                  class="social-icon" 
+                  aria-label="Visit GitHub profile"
+                  role="listitem"
+                >
                     <svg
                     class="w-6 h-6"
                     fill="currentColor"
@@ -156,8 +200,13 @@
                     />
                     </svg>
                 </a>
-                <!-- twitter -->
-                <a href="#" class="social-icon">
+                <!-- Twitter -->
+                <a 
+                  href="#" 
+                  class="social-icon" 
+                  aria-label="Visit Twitter profile"
+                  role="listitem"
+                >
                     <svg
                     class="w-6 h-6"
                     fill="currentColor"
@@ -169,8 +218,15 @@
                     />
                     </svg>
                 </a>
-                <!-- linkedin -->
-                <a href="https://www.linkedin.com/in/itswal/" class="social-icon" target="_blank">
+                <!-- LinkedIn -->
+                <a 
+                  href="https://www.linkedin.com/in/itswal/" 
+                  class="social-icon" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit LinkedIn profile (opens in new tab)"
+                  role="listitem"
+                >
                     <svg
                     class="w-6 h-6"
                     fill="currentColor"
@@ -185,10 +241,10 @@
                     </svg>
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- Bio Section - Initially hidden -->
-        <div id="bio-section" class="hidden">
+        <section id="bio-section" class="hidden" aria-hidden="true">
             <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">About Me</h2>
             <p class="text-lg text-gray-700 mb-4">
                 Hey, you... still nothing here yet :< 
@@ -196,50 +252,23 @@
             <p class="text-lg text-gray-700 mb-4">
                 Have a cool flower
             </p>
-            <img src="https://placehold.co/600x300/e6e6fa/4a5568?text=Cool+Flower+Here" onerror="this.src='flower.jpg'" alt="A cool flower image" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+            <img 
+              src="https://placehold.co/600x300/e6e6fa/4a5568?text=Cool+Flower+Here" 
+              data-fallback="flower.jpg"
+              alt="A cool flower image" 
+              class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" 
+              loading="lazy"
+              width="600"
+              height="300"
+            />
             <p class="text-sm text-gray-500 mt-2 text-center">
                 (This image is supposed to be that flower, but if it doesn't load, pretend it's there, okay?!)
             </p>
-        </div>
+        </section>
       </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bioNavLink = document.getElementById('bio-nav-link');
-            const catNavLink = document.getElementById('cat-nav-link');
-            const bearNavLink = document.getElementById('bear-nav-link');
-            const doggoNavLink = document.getElementById('doggo-nav-link');
-
-            const introSection = document.getElementById('intro-section');
-            const bioSection = document.getElementById('bio-section');
-
-            // Function to show a specific section and hide others
-            function showSection(sectionToShow) {
-                introSection.classList.add('hidden');
-                bioSection.classList.add('hidden');
-
-                sectionToShow.classList.remove('hidden');
-            }
-
-            // Event listener for the Bio link
-            bioNavLink.addEventListener('click', function(event) {
-                event.preventDefault(); // Stop the default link behavior
-                showSection(bioSection);
-            });
-
-            // For other links, currently just show the intro section as a fallback, but open new tab for external links
-            catNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
-                // Since target="_blank" is used, default behavior is fine.
-            });
-            bearNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
-            });
-            doggoNavLink.addEventListener('click', function(event) {
-                // For external links, prevent default only if you want to control opening in same tab.
-            });
-        });
-    </script>
+    <!-- JavaScript -->
+    <script src="./assets/script.js"></script>
   </body>
 </html>

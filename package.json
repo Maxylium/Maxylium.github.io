@@ -1,0 +1,21 @@
+{
+  "name": "itswal-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website for Wal",
+  "main": "index.html",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/input.css -o ./assets/style.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./assets/style.css --minify",
+    "dev": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "portfolio",
+    "website",
+    "personal"
+  ],
+  "author": "Wal",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

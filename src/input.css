@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #ffdabe, #ffc0cb 30%, #e6e6fa 60%, #add8e6 100%);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    overflow: hidden;
+    position: relative;
+    will-change: background-position;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    body {
+      animation: none;
+      background: linear-gradient(135deg, #ffdabe, #ffc0cb 30%, #e6e6fa 60%, #add8e6 100%);
+    }
+    
+    .blob {
+      animation: none !important;
+    }
+    
+    .nav-link,
+    .social-icon {
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  .blob {
+    @apply absolute opacity-50 z-0;
+    filter: blur(40px);
+  }
+
+  .blob-1 {
+    @apply w-[450px] h-[450px] -top-[100px] -left-[100px];
+    background: rgba(170, 180, 200, 0.5);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    animation: blobFloat 20s infinite alternate;
+  }
+
+  .blob-2 {
+    @apply w-[550px] h-[550px] -bottom-[150px] -right-[150px];
+    background: rgba(60, 140, 130, 0.6);
+    border-radius: 70% 30% 40% 60% / 60% 40% 70% 30%;
+    animation: blobFloat 25s infinite alternate-reverse;
+  }
+
+  .nav-link,
+  .social-icon {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .nav-link:hover {
+    @apply -translate-y-0.5 text-gray-600;
+  }
+
+  .social-icon:hover {
+    @apply scale-110 text-orange-500;
+  }
+
+  /* Focus styles for accessibility */
+  .nav-link:focus,
+  .social-icon:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 rounded;
+  }
+
+  /* Button styles for Bio navigation */
+  .nav-button {
+    @apply bg-transparent border-none cursor-pointer;
+  }
+}
+
+@layer utilities {
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
