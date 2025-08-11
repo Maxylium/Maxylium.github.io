@@ -18,6 +18,8 @@
         background-size: 400% 400%;
         animation: gradientAnimation 15s ease infinite;
         overflow: hidden;
+        position: relative; /* Added for optimization */
+        will-change: background-position; /* Added for optimization */
       }
       @keyframes gradientAnimation {
         0% {
