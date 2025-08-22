@@ -14,24 +14,30 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        overflow: hidden;
+        position: relative;
+        background-color: #121212;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
         background: linear-gradient(135deg, #ffdabe, #ffc0cb 30%, #e6e6fa 60%, #add8e6 100%);
         background-size: 400% 400%;
-        animation: gradientAnimation 15s ease infinite;
-        overflow: hidden;
-        position: relative; /* Added for optimization */
-        will-change: background-position; /* Added for optimization */
+        animation: gradient 15s ease infinite;
       }
-      @keyframes gradientAnimation {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
+
       .blob {
         position: absolute;
         opacity: 0.5;
@@ -62,13 +68,25 @@
           border-radius: 70% 30% 40% 60% / 60% 40% 70% 30%;
         }
       }
-      .nav-link,
-      .social-icon {
+      
+      .nav-link {
+        /* This is important! It gives our ::after spirit a home to be positioned within. */
+        position: relative;
         transition: all 0.2s ease-in-out;
+        /* THE FIX: This makes the <a> tag only as wide as its content,
+           which makes our centering logic work correctly. */
+        display: inline-block;
       }
       .nav-link:hover {
         transform: translateY(-2px);
         color: #4a5568;
+      }
+      .nav-link.active {
+        font-weight: 700;
+        color: #374151;
+      }
+      .social-icon {
+        transition: all 0.2s ease-in-out;
       }
       .social-icon:hover {
         transform: scale(1.2);
@@ -76,6 +94,54 @@
       }
       .hidden {
         display: none !important;
+      }
+
+      #squiggle-path {
+        stroke: #d57624;
+        stroke-width: 5;
+        stroke-linecap: round;
+        fill: none;
+        stroke-dasharray: var(--squiggle-length);
+        stroke-dashoffset: var(--squiggle-length);
+        animation: draw 1.5s ease-out 0.5s forwards;
+      }
+
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      /* --- THE TORCHLIGHT SPELL (ENHANCED) --- */
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        
+        /* THE FIX: Was -10px. Let's make it 0px to pull the glow up closer to the text. */
+        bottom: 0px; 
+        left: 50%;
+        transform: translateX(-50%);
+        
+        /* Let's make the glow a little taller for more presence. */
+        width: 80%;
+        height: 12px; 
+        
+        background: #d57624;
+        
+        /* THE FIX: Was 15px. Let's reduce the blur to make the light more concentrated and intense. */
+        filter: blur(10px);
+        
+        /* THE FIX: Was 0.7. Let's bump it up slightly for more oomph. */
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: -1;
+      }
+
+      /* When a nav link has the 'hover' class, we make its spirit visible. */
+      .nav-link:hover::after {
+        opacity: 0.7;
+      }
+      .nav-link.active::after {
+        opacity: 1;
       }
     </style>
   </head>
@@ -85,196 +151,135 @@
       <div class="blob blob-2"></div>
     </div>
 
-    <!-- main flex container that holds the nav and content sections -->
-    <div
-      class="relative min-h-screen flex flex-col md:flex-row items-center justify-center p-4 md:pl-2 z-10"
-    >
-      <nav
-        class="w-full md:w-1/4 mb-8 md:mb-0 md:mr-8 flex justify-center md:justify-start"
-      >
-        <div
-          class="container mx-auto flex flex-row md:flex-col space-x-6 md:space-x-0 md:space-y-6 text-sm font-normal tracking-widest text-gray-700 uppercase"
+    <div class="relative min-h-screen flex items-center justify-center p-4 z-10">
+      <div class="max-w-6xl w-full flex flex-col md:flex-row md:items-start md:space-x-8">
+        <nav class="w-full md:w-1/4 mb-8 md:mb-0">
+          <div
+            class="container mx-auto flex flex-row md:flex-col justify-center md:items-center space-x-6 md:space-x-0 md:space-y-6 text-sm font-normal tracking-widest text-gray-700 uppercase"
+          >
+            <a href="#" class="nav-link" id="bio-nav-link">Bio</a>
+            <a href="#" class="nav-link" id="cat-nav-link">Cat</a>
+            <a href="#" class="nav-link" id="bear-nav-link">Bear</a>
+            <a href="#" class="nav-link" id="doggo-nav-link">Doggo</a>
+          </div>
+        </nav>
+
+        <main
+          class="w-full md:w-3/4 bg-white/30 backdrop-blur-md rounded-2xl border border-[#d4b38d] p-8 md:p-12"
         >
-          <a href="#" class="nav-link" id="bio-nav-link">Bio</a>
-          <a href="#" class="nav-link" id="cat-nav-link">Cat</a>
-          <a href="#" class="nav-link" id="bear-nav-link">Bear</a>
-          <a href="#" class="nav-link" id="doggo-nav-link">Doggo</a>
-        </div>
-      </nav>
+          <!-- Intro Section - Initially visible -->
+          <div id="intro-section">
+              <div class="mb-4">
+                  <h1 class="text-5xl md:text-7xl font-bold text-gray-800">Wal</h1>
+                  <svg id="squiggle-svg" class="h-8 w-40 -mt-2" viewBox="0 0 160 30">
+                    <path id="squiggle-path" d="M 5,15 C 40,30 80,-10 155,15" />
+                  </svg>
+              </div>
 
-      <main
-        class="w-full max-w-5xl md:w-3/4 bg-white/30 backdrop-blur-md rounded-2xl border border-[#d4b38d] p-8 md:p-12 relative"
-        style="transform: translateX(-20px);"
-      >
-        <!-- Intro Section - Initially visible -->
-        <div id="intro-section">
-            <div class="mb-8">
-                <h1 class="text-5xl md:text-7xl font-bold text-gray-800">Wal</h1>
-                <p class="text-lg md:text-xl text-gray-700 mt-2">student</p>
-            </div>
+              <div class="flex items-center space-x-5 text-amber-600 mt-6">
+                  <a href="#" class="social-icon h-6 w-6 flex items-center justify-center" aria-label="Instagram">
+  <svg role="img" viewBox="-2 -2 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" preserveAspectRatio="xMinYMin">
+    <path d='M14.017 0h-8.07A5.954 5.954 0 0 0 0 5.948v8.07a5.954 5.954 0 0 0 5.948 5.947h8.07a5.954 5.954 0 0 0 5.947-5.948v-8.07A5.954 5.954 0 0 0 14.017 0zm3.94 14.017a3.94 3.94 0 0 1-3.94 3.94h-8.07a3.94 3.94 0 0 1-3.939-3.94v-8.07a3.94 3.94 0 0 1 3.94-3.939h8.07a3.94 3.94 0 0 1 3.939 3.94v8.07z'/>
+    <path d='M9.982 4.819A5.17 5.17 0 0 0 4.82 9.982a5.17 5.17 0 0 0 5.163 5.164 5.17 5.17 0 0 0 5.164-5.164A5.17 5.17 0 0 0 9.982 4.82zm0 8.319a3.155 3.155 0 1 1 0-6.31 3.155 3.155 0 0 1 0 6.31z'/>
+    <circle cx='15.156' cy='4.858' r='1.237'/>
+  </svg>
+</a>
+                  <a href="https://github.com/walsoup/" class="social-icon h-6 w-6 flex items-center justify-center"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.017C22 6.484 17.523 2 12 2z" /></svg></a>
+                  <a href="#" class="social-icon h-6 w-6 flex items-center justify-center"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                  <a href="https://www.linkedin.com/in/itswal/" class="social-icon h-6 w-6 flex items-center justify-center" target="_blank"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              </div>
+          </div>
 
-            <div class="flex space-x-5 text-amber-600 mt-6">
-                <!-- insta icon -->
-                <a href="#" class="social-icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="xMidYMid meet"
-                    version="1.0"
-                    viewBox="0 0 456.4 456.3"
-                    style="fill: currentColor;"
-                    width="24px"
-                    height="24px"
-                    >
-                    <g>
-                        <g id="__id0_sd5b1nkfnl">
-                        <path
-                            d="M228.1,41.1c60.9,0,68.1,0.2,92.2,1.3c22.2,1,34.3,4.7,42.4,7.9c10.6,4.1,18.2,9.1,26.2,17.1 c8,8,12.9,15.6,17.1,26.2c3.1,8,6.8,20.1,7.9,42.4c1.1,24.1,1.3,31.3,1.3,92.2c0,60.9-0.2,68.1-1.3,92.2c-1,22.2-4.7,34.3-7.9,42.4 c-4.1,10.6-9.1,18.2-17.1,26.2c-8,8-15.6,12.9-26.2,17.1c-8,3.1-20.1,6.8-42.4,7.9c-24.1,1.1-31.3,1.3-92.2,1.3 c-60.9,0-68.1-0.2-92.2-1.3c-22.2-1-34.3-4.7-42.4-7.9c-10.6-4.1-18.2-9.1-26.2-17.1c-8-8-12.9-15.6-17.1-26.2 c-3.1-8-6.8-20.1-7.9-42.4c-1.1-24.1-1.3-31.3-1.3-92.2c0-60.9,0.2-68.1,1.3-92.2c1-22.2,4.7-34.3,7.9-42.4 c4.1-10.6,9.1,18.2,17.1-26.2c8-8,15.6-12.9,26.2-17.1c8-3.1,20.1-6.8,42.4-7.9C160,41.3,167.2,41.1,228.1,41.1 M228.1,0 c-62,0-69.7,0.3-94.1,1.4c-24.3,1.1-40.9,5-55.4,10.6c-15,5.8-27.7,13.6-40.4,26.3C25.6,51,17.8,63.7,12,78.7 c-5.6,14.5-9.5,31.1-10.6,55.4C0.3,158.4,0,166.2,0,228.1c0,62,0.3,69.7,1.4,94.1c1.1,24.3,5,40.9,10.6,55.4 c5.8,15,13.6,27.7,26.3,40.4c12.7,12.7,25.4,20.5,40.4,26.3c14.5,5.6,31.1,9.5,55.4,10.6c24.3,1.1,32.1,1.4,94.1,1.4 c62,0,69.7-0.3,94.1-1.4c24.3-1.1,40.9-5,55.4-10.6c15-5.8,27.7-13.6,40.4-26.3c12.7-12.7,20.5-25.4,26.3-40.4 c5.6-14.5,9.5-31.1,10.6-55.4c1.1-24.3,1.4-32.1,1.4-94.1c0-62-0.3-69.7-1.4-94.1c-1.1-24.3-5-40.9-10.6-55.4 c-5.8-15-13.6-27.7-26.3-40.4c-12.7-12.7-25.4-20.5-40.4-26.3c-14.5-5.6-31.1-9.5-55.4-10.6C297.9,0.3,290.1,0,228.1,0"
-                        />
-                        </g>
-                        <g id="__id1_sd5b1nkfnl">
-                        <path
-                            d="M228.1,111C163.4,111,111,163.4,111,228.1c0,64.7,52.5,117.2,117.2,117.2c64.7,0,117.2-52.4,117.2-117.2 C345.3,163.4,292.8,111,228.1,111 M228.1,304.2c-42,0-76-34-76-76c0-42,34-76,76-76c42,0,76,34,76,76 C304.2,270.1,270.1,304.2,228.1,304.2"
-                        />
-                        </g>
-                        <g id="__id2_sd5b1nkfnl">
-                        <path
-                            d="M377.3,106.4c0,15.1-12.3,27.4-27.4,27.4c-15.1,0-27.4-12.3-27.4-27.4c0-15.1,12.3-27.4,27.4-27.4 C365,79,377.3,91.2,377.3,106.4"
-                        />
-                        </g>
-                    </g>
-                    </svg>
-                </a>
-                <!-- github -->
-                <a href="#" class="social-icon">
-                    <svg
-                    class="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fill-rule="evenodd"
-                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                        clip-rule="evenodd"
-                    />
-                    </svg>
-                </a>
-                <!-- twitter -->
-                <a href="#" class="social-icon">
-                    <svg
-                    class="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    >
-                    <path
-                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                    />
-                    </svg>
-                </a>
-                <!-- linkedin -->
-                <a href="https://www.linkedin.com/in/itswal/" class="social-icon" target="_blank">
-                    <svg
-                    class="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fill-rule="evenodd"
-                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-                        clip-rule="evenodd"
-                    />
-                    </svg>
-                </a>
-            </div>
-        </div>
+          <!-- Bio Section - Initially hidden -->
+          <div id="bio-section" class="hidden">
+              <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">About Me</h2>
+              <p class="text-lg text-gray-700 mb-4">
+                  Hey, you... still nothing here yet :< 
+              </p>
+              <p class="text-lg text-gray-700 mb-4">
+                  Have a cool flower
+              </p>
+              <img src="flower.jpg" alt="A cool flower image" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+          </div>
 
-        <!-- Bio Section - Initially hidden -->
-        <div id="bio-section" class="hidden">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">About Me</h2>
-            <p class="text-lg text-gray-700 mb-4">
-                Hey, you... still nothing here yet :< 
-            </p>
-            <p class="text-lg text-gray-700 mb-4">
-                Have a cool flower
-            </p>
-            <img src="flower.jpg" alt="A cool flower image" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
-        </div>
+          <!-- Cat Section - Initially hidden -->
+          <div id="cat-section" class="hidden">
+              <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Cats</h2>
+              <p class="text-lg text-gray-700 mb-4">
+                  Here's cat kitty kitty kitty.
+              </p>
+              <img src="https://cataas.com/cat" alt="A cute cat" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+          </div>
 
-        <!-- Cat Section - Initially hidden -->
-        <div id="cat-section" class="hidden">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Cats</h2>
-            <p class="text-lg text-gray-700 mb-4">
-                Here's cat kitty kitty kitty.
-            </p>
-            <img src="https://cataas.com/cat" alt="A cute cat" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
-        </div>
+          <!-- Bear Section - Initially hidden -->
+          <div id="bear-section" class="hidden">
+              <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Bear fish</h2>
+              <p class="text-lg text-gray-700 mb-4">
+                  bear.
+              </p>
+              <img src="https://placebear.com/600/700" alt="A (doub) bear" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+          </div>
 
-        <!-- Bear Section - Initially hidden -->
-        <div id="bear-section" class="hidden">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Bear fish</h2>
-            <p class="text-lg text-gray-700 mb-4">
-                He smells bad istg.
-            </p>
-            <img src="https://placebear.com/600/700" alt="A (doub) bear" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
-        </div>
-
-        <!-- Doggo Section - Initially hidden -->
-        <div id="doggo-section" class="hidden">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Doggos galore</h2>
-            <p class="text-lg text-gray-700 mb-4">
-                Dogos!.
-            </p>
-            <img src="https://place.dog/700/600" alt="An dog" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
-        </div>
-      </main>
+          <!-- Doggo Section - Initially hidden -->
+          <div id="doggo-section" class="hidden">
+              <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Dogs</h2>
+              <p class="text-lg text-gray-700 mb-4">
+                  Dogs!.
+              </p>
+              <img src="https://place.dog/700/600" alt="An dog" class="rounded-lg mt-6 shadow-md w-full max-w-lg mx-auto" />
+          </div>
+        </main>
+      </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const bioNavLink = document.getElementById('bio-nav-link');
-            const catNavLink = document.getElementById('cat-nav-link');
-            const bearNavLink = document.getElementById('bear-nav-link');
-            const doggoNavLink = document.getElementById('doggo-nav-link');
+            const sections = {
+                intro: document.getElementById('intro-section'),
+                bio: document.getElementById('bio-section'),
+                cat: document.getElementById('cat-section'),
+                bear: document.getElementById('bear-section'),
+                doggo: document.getElementById('doggo-section'),
+            };
 
-            const introSection = document.getElementById('intro-section');
-            const bioSection = document.getElementById('bio-section');
-            const catSection = document.getElementById('cat-section');
-            const bearSection = document.getElementById('bear-section');
-            const doggoSection = document.getElementById('doggo-section');
+            const navLinks = {
+                bio: document.getElementById('bio-nav-link'),
+                cat: document.getElementById('cat-nav-link'),
+                bear: document.getElementById('bear-nav-link'),
+                doggo: document.getElementById('doggo-nav-link'),
+            };
 
-            // Function to show a specific section and hide others
-            function showSection(sectionToShow) {
-                introSection.classList.add('hidden');
-                bioSection.classList.add('hidden');
-                catSection.classList.add('hidden');
-                bearSection.classList.add('hidden');
-                doggoSection.classList.add('hidden');
-
-                sectionToShow.classList.remove('hidden');
+            function hideAllSections() {
+                for (const key in sections) {
+                    sections[key].classList.add('hidden');
+                }
+                for (const key in navLinks) {
+                    navLinks[key].classList.remove('active');
+                }
             }
 
-            // Event listeners for all navigation links
-            bioNavLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection(bioSection);
-            });
+            function showSection(key) {
+                hideAllSections();
+                sections[key].classList.remove('hidden');
+                if (navLinks[key]) {
+                    navLinks[key].classList.add('active');
+                }
+            }
 
-            catNavLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection(catSection);
-            });
-
-            bearNavLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection(bearSection);
-            });
-
-            doggoNavLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection(doggoSection);
-            });
+            for (const key in navLinks) {
+                navLinks[key].addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (sections[key].classList.contains('hidden')) {
+                        showSection(key);
+                    } else {
+                        showSection('intro');
+                    }
+                });
+            }
+            
+            const squigglePath = document.getElementById('squiggle-path');
+            const length = squigglePath.getTotalLength();
+            squigglePath.style.setProperty('--squiggle-length', length);
         });
     </script>
   </body>
